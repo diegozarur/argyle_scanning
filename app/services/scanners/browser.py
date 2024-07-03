@@ -31,13 +31,3 @@ def get_remote_webdriver() -> webdriver.Remote:
             f"Failed to connect to the Selenium Remote WebDriver at {selenium_hub_url}. "
             f"Ensure that the Selenium Hub is up and running. Error: {err}."
         )
-
-    #
-    # return webdriver.Remote(
-    #     # command_executor='http://172.17.0.1:4444/wd/hub',
-    #     command_executor='http://0.0.0.0:4444/wd/hub',
-    #     desired_capabilities={
-    #         'browserName': 'firefox',
-    #         'javascriptEnabled': True
-    #     },
-    # )

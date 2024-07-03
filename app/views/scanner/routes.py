@@ -6,7 +6,6 @@ from app.views.scanner.tasks import scanner_task
 from celery.result import AsyncResult
 
 
-
 @blueprint.route("/<name>", methods=["POST"])
 def scanner(name: str) -> Tuple[Response, int]:
     try:
