@@ -40,11 +40,8 @@ def create_app(config: Config) -> Flask:
 
     CORS(flask_app, resources={r"/*": {"origins": "*"}})
 
-    # Default scanner settings directory
-    default_scanner_settings = os.path.join(flask_app.root_path, "scanner_settings")
-    scanner_settings_directory = flask_app.config.get(
-        "SCANNER_SETTINGS", default_scanner_settings
-    )
+    scanner_settings_folder = flask_app.config.get("SCANNER_SETTINGS", "scanner_settings")
+    scanner_settings_directory = os.path.join(flask_app.root_path, "app", scanner_settings_folder)
 
     if not os.path.exists(scanner_settings_directory):
         os.makedirs(scanner_settings_directory)

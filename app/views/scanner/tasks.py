@@ -48,52 +48,9 @@ def _select_scanner(scanner_name: str) -> ScannerCreator:
 
 
 def _load_scanner_settings(scanner_name: str) -> dict:
-    scanner_settings_directory = Path(
-        f"{flask_app.root_path}/{flask_app.config['SCANNER_SETTINGS']}"
-    )
+    scanner_settings_directory = Path(flask_app.config['SCANNER_SETTINGS'])
+
     settings = JSONValidator.load_json_from_directory(scanner_settings_directory)
     scanner_settings = settings.get(scanner_name, {})
 
-    JSONValidator.validate(scanner_settings)
-
     return scanner_settings
-
-# class ScannerTasks(BaseTask):
-#     name = __name__
-#
-#     _scanner_selector: Dict[str, ScannerCreator] = {
-#         "upwork": UpworkCreator(),
-#     }
-#
-#     def run(self, scanner_name: Optional[str] = None) -> str:
-#         if scanner_name is None:
-#             raise ValueError("scanner_name must be provided")
-#
-#         scanner_creator = self._select_scanner(scanner_name)
-#         scanner_settings = self._load_scanner_settings(scanner_name)
-#
-#         scanner_service = ScannerService(scanner_creator)
-#
-#         return json.dumps(
-#             scanner_service.boot(scanner_settings)
-#         )  # Assuming the result needs to be serialized to a string
-#
-#     def _select_scanner(self, scanner_name: str) -> ScannerCreator:
-#         try:
-#             return self._scanner_selector[scanner_name]
-#         except KeyError:
-#             raise Exception("Scanner not found!")
-#
-#     def _load_scanner_settings(self, scanner_name: str) -> dict:
-#         scanner_settings_directory = Path(
-#             f"{flask_app.root_path}/{flask_app.config['SCANNER_SETTINGS']}"
-#         )
-#         settings = JSONValidator.load_json_from_directory(scanner_settings_directory)
-#         scanner_settings = settings.get(scanner_name, {})
-#
-#         JSONValidator.validate(scanner_settings)
-#
-#         return scanner_settings
-#
-#
-# current_app.register_task(ScannerTasks)
